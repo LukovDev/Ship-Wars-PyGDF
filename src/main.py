@@ -201,10 +201,10 @@ class GameClass(Window):
         self.batch.render()
 
         # Запекаем шрифты:
-        self.ui_font["hp"].bake_texture(f"HP: {self.player.hp}", 32, (1, 0, 0, 1), smooth = False)
-        self.ui_font["kills"].bake_texture(f"Kills: {self.player.kills}", 24, (1, 0, 0, 1), smooth = False)
-        self.ui_font["miss"].bake_texture(f"Misses: {self.player.miss}", 24, (1, 0, 0, 1), smooth = False)
-        self.ui_font["resp"].bake_texture(
+        self.ui_font["hp"].generate(f"HP: {self.player.hp}", 32, (1, 0, 0, 1), smooth = False)
+        self.ui_font["kills"].generate(f"Kills: {self.player.kills}", 24, (1, 0, 0, 1), smooth = False)
+        self.ui_font["miss"].generate(f"Misses: {self.player.miss}", 24, (1, 0, 0, 1), smooth = False)
+        self.ui_font["resp"].generate(
             f"Respawning  in  {int(self.restart_timecount-self.restart_timeout+1)}",
             24, (1, 1, 1, 1), smooth = False
         )
@@ -212,14 +212,14 @@ class GameClass(Window):
         # Рисуем интерфейс:
         self.camera.ui_begin()
         size = self.window.get_size()
-        Sprite2D(self.ui_font["kills"].get_texture()).render(32, 110)
-        Sprite2D(self.ui_font["miss"].get_texture()).render(32, 75)
-        Sprite2D(self.ui_font["hp"].get_texture()).render(32, 32)
+        Sprite2D(self.ui_font["kills"].texture).render(32, 110)
+        Sprite2D(self.ui_font["miss"].texture).render(32, 75)
+        Sprite2D(self.ui_font["hp"].texture).render(32, 32)
 
         if self.player.death:
             Sprite2D().render(0, 0, size.x, size.y, color=(0.0, 0.0, 0.0, 0.4))
             death_text_sz = vec2(self.ui_font["resp"].get_width(), self.ui_font["resp"].get_height())
-            Sprite2D(self.ui_font["resp"].get_texture()).render(size.x/2-death_text_sz.x/2, size.y/2-death_text_sz.y/2)
+            Sprite2D(self.ui_font["resp"].texture).render(size.x/2-death_text_sz.x/2, size.y/2-death_text_sz.y/2)
         self.camera.ui_end()
 
         # Отрисовываем всё в окно:
